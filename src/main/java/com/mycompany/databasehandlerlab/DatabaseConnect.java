@@ -210,17 +210,35 @@ public class DatabaseConnect{
                     this.student_department = student_department;
         }
 
-        public String getStudentId() { return student_id; }
-        public String getFirstName() { return student_Fname; }
-        public String getMiddleName() { return student_Mname; }
-        public String getLastName() { return student_Lname; }
-        public String getSex() { return student_sex; }
-        public String getBirthDate() { return student_birth; }
-        public int getStartYear() { return student_start; }
-        public String getDepartment() { return student_department; }
-        public int getUnits() { return student_units; }
-        public String getAddress() { return student_address; }
-        
-    }
+        public String getStudentId() { 
+            return student_id; 
+        }
+        public String getFirstName() { 
+            return student_Fname; 
+        }
+        public String getMiddleName() { 
+            return student_Mname; 
+        }
+        public String getLastName() { 
+            return student_Lname; 
+        }
+        public String getSex() { 
+            return student_sex; 
+        }
+        public String getBirthDate() { 
+            return student_birth; 
+        }
+        public int getStartYear() { 
+            return student_start; 
+        }
+        public String getDepartment() { 
+            return student_department; }
 
+        public int getUnits() { 
+            return student_units; 
+        }
+        public String getAddress() { 
+            return student_address; 
+        }
+    }
 }
