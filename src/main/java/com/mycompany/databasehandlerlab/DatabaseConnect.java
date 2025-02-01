@@ -1,6 +1,7 @@
 package com.mycompany.databasehandlerlab;
 
 import java.sql.*;
+import java.util.ArrayList;
 
 public class DatabaseConnect{
     private Connection conn;
@@ -58,10 +59,10 @@ public class DatabaseConnect{
         }        
     }
     public Student getStudent(String student_Fname, String student_Mname, String student_Lname) throws SQLException{
-        String qry = "SELECT * FROM Students s\r\n" + 
-                        "WHERE s.student_fname = ?\r\n" +
-                        "AND s.student_mname = ?\r\n" + 
-                        "AND s.student_lname = ?";
+        String qry = "SELECT * FROM Students \r\n" + 
+                        "WHERE student_fname = ?\r\n" +
+                        "AND student_mname = ?\r\n" + 
+                        "AND student_lname = ?";
         PreparedStatement pstmt = conn.prepareStatement(qry);
         pstmt.setString(1, student_Fname);
         pstmt.setString(2, student_Mname);
@@ -84,7 +85,73 @@ public class DatabaseConnect{
         }        
     }
 
-    public boolean insetStudent(Student newStudent) throws SQLException{
+    public ArrayList<Student> getStudents()throws SQLException{
+        String qry = "SELECT * FROM Students";
+        ArrayList<Student> studs = new ArrayList<>();
+        PreparedStatement pstmt = conn.prepareStatement(qry);
+        ResultSet rs = pstmt.executeQuery();
+        while(rs.next()){
+            studs.add(new Student(rs.getString("student_number"), 
+                                    rs.getString("student_fname"), 
+                                    rs.getString("student_mname"),
+                                    rs.getString("student_lname"),
+                                    rs.getString("student_sex"),
+                                    rs.getString("student_birth"),
+                                    rs.getInt("student_start"),
+                                    rs.getString("student_department"),
+                                    rs.getInt("student_units"),
+                                    rs.getString("student_address")
+                                    ));
+        }
+        return studs;
+    }
+
+    public Boolean removeStudent(String studentNumber) throws SQLException{
+        String qry = "DELETE FROM Students \r\n" + //
+                        "WHERE student_number = ?";
+        PreparedStatement pstmt = conn.prepareStatement(qry);
+        pstmt.setString(1, studentNumber);
+        return pstmt.executeUpdate() > 0;
+    }
+
+    public Boolean getStudentByYear(int year) throws SQLException{
+        String qry = "SELECT * FROM Students \r\n" + //
+                    "WHERE student_start LIKE ?";
+        PreparedStatement pstmt = conn.prepareStatement(qry);
+        pstmt.setInt(1, year);
+        ResultSet rs = pstmt.executeQuery();
+        return rs.next();       
+    }
+
+    public Boolean updateStudentInfo(String studentNumber, Student studentInfo) throws SQLException{
+        String qry = "UPDATE Students \r\n" + //
+                        "SET student_fname = ?\r\n" + //
+                        ", student_mname = ?\r\n" + //
+                        ", student_lname = ?\r\n" + //
+                        ", student_department = ?\r\n" + //
+                        ", student_address = ?\r\n" + //
+                        "WHERE student_number = ?";
+        PreparedStatement pstmt = conn.prepareStatement(qry);
+        pstmt.setString(1, studentInfo.getFirstName());
+        pstmt.setString(2, studentInfo.getMiddleName());
+        pstmt.setString(3, studentInfo.getLastName());
+        pstmt.setString(4, studentInfo.getDepartment());
+        pstmt.setString(5, studentInfo.getAddress());
+        pstmt.setString(6, studentNumber);
+        return pstmt.executeUpdate() > 0;
+    }
+
+    public Boolean updateStudentUnits(int subtractedUnits, String studentNumber) throws SQLException{
+        String qry = "UPDATE Students \r\n" + //
+                        "SET student_units = ?\r\n" + //
+                        "WHERE student_number = ?";
+        PreparedStatement pstmt = conn.prepareStatement(qry);
+        pstmt.setInt(1, subtractedUnits);
+        pstmt.setString(2, studentNumber);
+        return pstmt.executeUpdate() > 0;
+    }
+
+    public boolean insertStudent(Student newStudent) throws SQLException{
         String qry = "INSERT INTO Students (\r\n" + //
                         "student_number\r\n" + //
                         ", student_fname\r\n" + //
@@ -157,6 +224,3 @@ public class DatabaseConnect{
     }
 
 }
-
-
-
