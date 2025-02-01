@@ -16,7 +16,7 @@ public class DatabaseHandlerLab {
         DatabaseConnect data = new DatabaseConnect("students.db");
         data.initializeStudents();
 
-        DatabaseConnect.Student stud = new DatabaseConnect.Student("20230101234", "Karl", "Sotto", "Mapagmahal", "M", "2001-01-01", 2024, "CICS", 26, "Novaliches");
+        DatabaseConnect.Student stud = new DatabaseConnect.Student("20230101234", "Karl", "Sotto", "Mapagmahal", "M", "2005-01-01", 2024, "CICS", 26, "Novaliches");
         data.insertStudent(stud);
         
         // data.getStudent("20230101234");

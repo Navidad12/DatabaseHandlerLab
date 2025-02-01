@@ -18,7 +18,6 @@ public class DatabaseConnect{
 
     public void idFormatChecker(String student_id){
         for(int i = 0; i < student_id.length(); i++){
-            System.out.println(student_id.charAt(i));
             if(student_id.length() != 11){
                 throw new RuntimeException("Not a valid Student Number");
             }
@@ -30,6 +29,30 @@ public class DatabaseConnect{
             }
             if((i == 5) && student_id.charAt(i) != '1'){
                 throw new RuntimeException("Not a valid Student Number");
+            }
+        }
+    }
+
+    public void birthYearChecker(String student_birth){
+        String [] date = student_birth.trim().split("-");
+        for(int i = 0; i < date.length; i++){
+            if(i == 0){
+                int foo = Integer.parseInt(date[i]);
+                if(foo < 1000 || foo > 9999){
+                    throw new RuntimeException("Not a valid Birth Year");
+                }
+            }
+            if(i == 1){
+                int foo = Integer.parseInt(date[i]);
+                if(foo < 1 || foo > 12){
+                    throw new RuntimeException("Not a valid Birth Month");
+                }
+            }
+            if(i == 2){
+                int foo = Integer.parseInt(date[i]);
+                if(foo < 1 || foo > 31){
+                    throw new RuntimeException("Not a valid Birth Day");
+                }
             }
         }
     }
@@ -171,6 +194,7 @@ public class DatabaseConnect{
 
     public boolean insertStudent(Student newStudent) throws SQLException{
         idFormatChecker(newStudent.getStudentId());
+        birthYearChecker(newStudent.getBirthDate());
         String qry = "INSERT INTO Students (\r\n" + //
                         "student_number\r\n" + //
                         ", student_fname\r\n" + //
