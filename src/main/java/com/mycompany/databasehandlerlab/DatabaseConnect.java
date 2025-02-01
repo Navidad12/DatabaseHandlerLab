@@ -3,8 +3,6 @@ package com.mycompany.databasehandlerlab;
 import java.sql.*;
 import java.util.ArrayList;
 
-import javax.management.RuntimeErrorException;
-
 public class DatabaseConnect{
     private Connection conn;
 
