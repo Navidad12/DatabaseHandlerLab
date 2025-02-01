@@ -11,6 +11,8 @@ package com.mycompany.databasehandlerlab;
 public class DatabaseHandlerLab {
 
     public static void main(String[] args) {
-        System.out.println("");
+        DatabaseConnect data = new DatabaseConnect("students.db");
+
+        data.initializeStudents();
     }
 }
