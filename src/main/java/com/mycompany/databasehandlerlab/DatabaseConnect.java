@@ -3,6 +3,8 @@ package com.mycompany.databasehandlerlab;
 import java.sql.*;
 import java.util.ArrayList;
 
+import javax.management.RuntimeErrorException;
+
 public class DatabaseConnect{
     private Connection conn;
 
@@ -13,6 +15,24 @@ public class DatabaseConnect{
         } catch (SQLException e) {
             System.err.println("Failed to create connection");
             System.err.println(e.toString());
+        }
+    }
+
+    public void idFormatChecker(String student_id){
+        for(int i = 0; i < student_id.length(); i++){
+            System.out.println(student_id.charAt(i));
+            if(student_id.length() != 11){
+                throw new RuntimeException("Not a valid Student Number");
+            }
+            if(!(student_id.charAt(i) >= '0' && student_id.charAt(i) <= '9')){
+                throw new RuntimeException("Not a valid Student Number");
+            }
+            if((i == 4 || i == 6) && student_id.charAt(i) != '0'){
+                throw new RuntimeException("Not a valid Student Number");
+            }
+            if((i == 5) && student_id.charAt(i) != '1'){
+                throw new RuntimeException("Not a valid Student Number");
+            }
         }
     }
 
@@ -152,6 +172,7 @@ public class DatabaseConnect{
     }
 
     public boolean insertStudent(Student newStudent) throws SQLException{
+        idFormatChecker(newStudent.getStudentId());
         String qry = "INSERT INTO Students (\r\n" + //
                         "student_number\r\n" + //
                         ", student_fname\r\n" + //
