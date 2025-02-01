@@ -37,7 +37,7 @@ public class DatabaseConnect{
         pstmt.executeUpdate();
     }
 
-    public Student getStudents(String student_id) throws SQLException {
+    public Student getStudent(String student_id) throws SQLException {
         String qry = "SELECT * FROM Students WHERE student_number = ?";
         PreparedStatement pstmt = conn.prepareStatement(qry);
         pstmt.setString(1, student_id);
